@@ -1,0 +1,50 @@
+
+.images
+{
+ 	left:25%;
+}
+
+.buildings
+{
+	position:absolute;
+	height:200px;
+	width:50%;
+	bottom:0%;
+
+}
+
+
+#clouds
+{
+	position:relative;
+	-webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+
+	top:20%;
+	height:200px;
+	width:57%;
+}
+#filler
+{
+	background-color:rgb(153,255,255);
+	position:relative;
+	margin-top:-3%;
+	height:300px;
+	width:57%;
+
+}
+
+#building-left
+{
+	left:0%;
+}
+
+#building-middle
+{
+    left:230px;
+}
+#building-right
+{
+    left:460px;
+    clip: rect(0px,300px,300px,0px);
+}
