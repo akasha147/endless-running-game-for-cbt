@@ -12,7 +12,12 @@
 	bottom:0%;
 
 }
+.road
+{ 
+	position:absolute;
+	bottom:-15%;
 
+}
 
 #clouds
 {
@@ -34,17 +39,17 @@
 
 }
 
-#building-left
+#building-left,#road-left
 {
 	left:0%;
 }
 
-#building-middle
+#building-middle,#road-middle
 {
-    left:230px;
+    left:260px;
 }
-#building-right
+#building-right,#road-right
 {
-    left:460px;
-    clip: rect(0px,300px,300px,0px);
+    left:520px;
+    clip: rect(0px,243px,243px,0px);
 }
