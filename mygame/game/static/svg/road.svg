@@ -1,0 +1,38 @@
+<svg version="1.1" id="HyN7Si1xkm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="600" height="57" viewBox="0 0 600 57" enable-background="new 0 0 761 57" xml:space="preserve"><style type="text/css">@-webkit-keyframes rkrmSjJxJX_r1gaNYMJQ_Animation {
+    0% {
+        -webkit-transform: translate(-51px, 0px);
+                transform: translate(-51px, 0px)
+    }
+    100% {
+        -webkit-transform: translate(-142px, 0px);
+                transform: translate(-142px, 0px)
+    }
+}
+@keyframes rkrmSjJxJX_r1gaNYMJQ_Animation {
+    0% {
+        -webkit-transform: translate(-51px, 0px);
+                transform: translate(-51px, 0px)
+    }
+    100% {
+        -webkit-transform: translate(-142px, 0px);
+                transform: translate(-142px, 0px)
+    }
+}
+#HyN7Si1xkm * {
+    -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+    -webkit-animation-timing-function: cubic-bezier(0, 0, 1, 1);
+            animation-timing-function: cubic-bezier(0, 0, 1, 1)
+}
+#rkrmSjJxJX_r1gaNYMJQ {
+    -webkit-animation-name: rkrmSjJxJX_r1gaNYMJQ_Animation;
+            animation-name: rkrmSjJxJX_r1gaNYMJQ_Animation;
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    transform-box: fill-box;
+    -webkit-transform: translate(-51px, 0px);
+            transform: translate(-51px, 0px)
+}</style><style/>  <g id="rkrmSjJxJX_r1gaNYMJQ" data-animator-group="true" data-animator-type="0"><image id="rkrmSjJxJX" width="761" height="57" x="0" y="0" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAvkAAAA5CAMAAACbFcTXAAAABGdBTUEAALGPC/xhBQAAACBjSFJN&#10;AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACeVBMVEVHUUlIUkpJU0tKVEwu&#10;NS4tNy8vNi8uODAwNzAtNC0rNS0sNi4xODEvOTEvNDAvNTEwNTExNjIyNzMxNzMuNDAwNjIxMzAw&#10;Mi8uMy8zNTI1NTU0NjU0NDQzNTQzMzMyNDMyMjIxMzIxMTE0MjM1MzQzMTIyMDEzMzUyMzU2NjYw&#10;MDA3NzcvLy8uLi44ODgtLS1MTExiYmJ3d3eHh4eTk5OioqKnp6ekpKSmpqaoqKidnZ2SkpKAgIBz&#10;c3NcXFxDQ0M6OjpTU1NtbW17e3uKioqbm5ugoKChoaGampqOjo5/f39XV1dAQEBaWlpvb29+fn6c&#10;nJylpaWjo6OUlJROTk5NTU12dnaGhoZxcXFBQUFwcHCNjY15eXloaGhQUFBHR0efn59eXl5LS0s7&#10;OztSUlKIiIiZmZmMjIxsbGxUVFRbW1uQkJCenp6JiYllZWVZWVmqqqrFxcXc3Nz09PT7+/v4+Pj9&#10;/f38/Pz6+vr5+fnr6+vBwcGBgYFWVlY5OTk8PDxmZmaVlZWxsbHMzMzq6ur39/fV1dW6urqYmJhG&#10;RkYsLCx9fX29vb3b29vp6en19fXf39/IyMisrKxfX18/Pz+rq6vd3d329vbo6OjY2NhRUVFISEi4&#10;uLjS0tLt7e3j4+PPz8+1tbWWlpa/v7/a2tr+/v7e3t5CQkJqamqPj4/k5OS7u7t4eHi3t7fU1NTu&#10;7u7g4OCvr69jY2M+Pj5ra2uFhYXCwsLAwMDGxsbExMRnZ2dFRUWzs7O0tLR6enpkZGS2trbDw8O+&#10;vr5ubm5hYWE9PT2CgoKysrKLi4srKyuEhIRycnK5ubl8fHx0dHQqKiopKSknJyf///8q1gVjAAAA&#10;AWJLR0TS4NiusAAAAAd0SU1FB+IFFBcuAeWq094AAAhKSURBVHja7ZyJnxTFFccb4pVDkCQaUynL&#10;SiGJXdPLvTOz7gIrshIEgdklIoJo4oGaRViZndl1vHWVIGoUT9R4EGIM8cBjxvWK45XEK/of+aq7&#10;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"/></g>
+<script>(function(){var a=document.querySelector('#HyN7Si1xkm'),b=a.querySelectorAll('style'),c=function(d){b.forEach(function(f){var g=f.textContent;g&amp;&amp;(f.textContent=g.replace(/transform-box:[^;\r\n]*/gi,'transform-box: '+d))})};c('initial'),window.requestAnimationFrame(function(){return c('fill-box')})})();</script></svg>

@@ -1,23 +1,89 @@
 
 .images
 {
- 	left:25%;
+    position:absolute;
  	z-index:-2;
+ 	left:5%;
+ 
 }
 
 .buildings
 {
-	position:absolute;
-	height:200px;
-	width:50%;
-	bottom:0%;
+	position:relative;
+    top:30%;
 	z-index:-1;
 
+	
+
+}
+div.bg {
+    position:relative;
+    width: 400px;
+    height: 200px;
+    z-index:0;
+    left:20%;
+ 
+  
+} 
+
+div.element1 {
+    position: absolute;
+    top: -60px;
+    left: 4px;
+    width: 200px;
+    height: 100px;
+   
+}
+div.element2{
+	position: absolute;
+    top: -97px;
+    left: 57%;
+    width: 200px;
+    height: 200px;
+
+}
+div.health_bar_element{
+	position:absolute;
+    top: 40px;
+    left: 83%;
+    width: 160px;
+    height: 10px;
+    background-color:red;
+
+}
+div.level_element{
+
+    position: absolute;
+    top: -15px;
+    left: 87%;
+    width: 200px;
+    height: 200px;
+
+}
+div.score_word_element
+{ 
+	position: absolute;
+    top: -15px;
+    right:-120%;
+    width: 200px;
+    height: 200px;
+
+}
+div.score_display
+{
+	position: absolute;
+    top: 0px;
+    font-size:20px;
+    right:-101%;
+    text-align:center;
+    width: 200px;
+    height: 200px;
 }
 .road
 { 
-	position:absolute;
-	bottom:-15%;
+	position:relative;
+    top:28%;
+	z-index:-1;
 
 }
 .avatar
@@ -30,36 +96,53 @@
 
 #clouds
 {
-	position:relative;
+    position:relative;
 	-webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+    height:200px;
+	width:750px;
+	left:5%;
 
-	top:20%;
-	height:200px;
-	width:57%;
+	
+
 }
 #filler
 {
 	background-color:rgb(153,255,255);
-	position:relative;
+
 	margin-top:-3%;
 	height:300px;
-	width:57%;
+	width:750px;
 
 }
 
-#building-left,#road-left
+#arrows
 {
-	left:0%;
+	width:250px;
+	height:200px;
+
+	
+
+}
+#health_panel
+{
+	position:absolute;
+	width:300px;
+	height:300px;
+	
+
+}
+#building-left
+{
+	width:750px;
+	height:240px;
 }
 
-#building-middle,#road-middle
+#road-left
 {
-    left:260px;
+	width:750px;
+	height:67px;
 }
-#building-right,#road-right
-{
-    left:520px;
-    clip: rect(0px,243px,243px,0px);
-}
+
+
 
