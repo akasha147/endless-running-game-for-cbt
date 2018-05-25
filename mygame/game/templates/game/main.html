@@ -1,0 +1,150 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+	    <title>My game</title>
+
+	    <script src="{%static "js/watch.js" %}"></script>
+	    <script src="{%static "js/hammer.js" %}"></script>
+	  	<!--<script src="{%static "js/index.js" %}"></script>-->
+	    <script type="text/javascript" src="{%static "js/phaser.min.js" %}"></script>
+
+	     <style type="text/css">
+        body {
+            position:fixed;
+            margin: 0;
+            left:22%;
+            top:5%;
+        }
+    </style>
+
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		
+		var config = {
+	    	type: Phaser.AUTO,
+	    	width: 800,
+	    	height: 600,
+            
+        
+	    	
+            physics: {
+	        	default: 'arcade',
+	        	arcade: {
+	            		
+	            		debug: false
+	        		}
+	    		},
+	   	 	scene: {
+	        	preload: preload,
+	       	    create: create,
+	       	 	update: update
+	   		 }
+		};
+
+     
+
+       var cityline_title,small_road,brick,clouds,river,pavement,platform;
+   
+
+		function preload(){
+
+			
+		this.load.image('skyline','http://localhost:8000/static/game/jpg_phaser/blue_city.jpg');
+        this.load.image('brick','http://localhost:8000/static/game/jpg_phaser/platform.jpg');
+        this.load.image('road','http://localhost:8000/static/game/jpg_phaser/road.jpg');
+
+         this.load.image('clouds','http://localhost:8000/static/game/jpg_phaser/clouds.jpg');
+
+          this.load.image('river','http://localhost:8000/static/game/jpg_phaser/river.jpg');
+
+          this.load.image('pavement','http://localhost:8000/static/game/jpg_phaser/pavement.jpg');
+
+          this.load.image('small_road','http://localhost:8000/static/game/jpg_phaser/small_road.jpg');
+
+         this.load.spritesheet('dude', 'http://localhost:8000/static/game/png/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+
+
+
+             
+
+		}
+
+
+
+		function create(){
+          
+        
+
+            platforms = this.physics.add.staticGroup();
+
+            
+            clouds=this.add.tileSprite(400,200,800,400,'clouds');
+
+            cityline_title=this.add.tileSprite(400,360,800,200,'skyline');
+
+            //platforms.create(0,603, 'brick').setScale(2).refreshBody();
+
+            brick=this.add.tileSprite(400,603,800,200,'brick');
+
+            
+             pavement=this.add.tileSprite(400,448,800,20,'pavement');
+
+            small_road=this.add.tileSprite(400,450,800,20,'small_road');
+
+             
+           
+            river=this.add.tileSprite(400,480,800,50,'river');
+
+            player = this.physics.add.sprite(100, 470, 'dude').setScale(1.5)
+
+             player.setBounce(0.2);
+             player.setCollideWorldBounds(true);
+
+
+             this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+
+            
+             
+             
+     
+
+		}
+
+		function update(){
+
+
+              cityline_title.tilePositionX+=2;
+              brick.tilePositionX+=3;
+              clouds.tilePositionX+=0.5;
+              small_road.tilePositionX+=1;
+              river.tilePositionY=1-river.tilePositionY
+
+
+              player.setVelocityX(0);
+
+        player.anims.play('right', true);
+
+    
+
+		
+		}
+
+
+        game=new Phaser.Game(config);
+
+
+		</script>
+	</body>
+</html>

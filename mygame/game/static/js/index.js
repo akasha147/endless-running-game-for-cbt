@@ -54,7 +54,7 @@ function avatar_animate(){
 		
 		jump_up=function(jump_height){
             
-            console.log(change_in_height);
+            //console.log(change_in_height);
 	        change_in_height++;
 			if(parseInt(change_in_height)==parseInt(jump_height))
 			{
@@ -71,7 +71,7 @@ function avatar_animate(){
 
 		jump_down=function(jump_height){
             
-            console.log(change_in_height);
+            //console.log(change_in_height);
 	        change_in_height++;
 			if(parseInt(change_in_height)==parseInt(jump_height))
 			{
@@ -140,8 +140,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
          
         
         (new avatar_animate()).avatar_jump(jump_height);
-
-        //score_handler_variable.increase_score(jump_score_increment);
+        score_handler_variable.increase_score(jump_score_increment);
    	});
 
    	watch(game, "level", function(){
@@ -156,4 +155,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	});
 
 });
+
+
 

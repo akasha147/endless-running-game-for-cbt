@@ -7,7 +7,7 @@ from django.template import loader
 
 def render_game(request):
    
-    template = loader.get_template('render.html')
+    template = loader.get_template('main.html')
     context = {
         'latest_question_list': 'akash',
     }
