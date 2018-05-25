@@ -2,38 +2,58 @@
 
 <!DOCTYPE html>
 <html>
+	
 	<head>
+  		
   		<link rel="stylesheet" href="{% static "css/index.css" %}">
-  		<script src="https://hammerjs.github.io/dist/hammer.js"></script>
+
+        <script src="{%static "js/watch.js" %}"></script>
+
+        <script src="{%static "js/hammer.js" %}"></script>
+  		
   		<script src="{%static "js/index.js" %}"></script>
+	
 	</head>
 	
-	<body onload="health_bar_handler()">
+	<body>
+	    
 	    <div class="bg" id="bg-frame">
+	    	
 	    	<img class="images" id="clouds" src="{% static "gifs/clouds.gif" %}">
-	    <div class="level_element">
-	    	<h2>LEVEL 1</h2>
-	    </div>	
+	    
+	    	<div class="level_element">
+	    		<h2 id="level_display">LEVEL 1</h2>
+	    	</div>	
 	  
-	    <div class="element1">
-			<img class="game_element" id="arrows" src="{% static "svg/arrow4.svg" %}"/>
-        </div>	
-        <div class="element2">
-			<img class="game_element" id="health_panel" src="{% static "svg/health_panel1.svg" %}"/>
-		</div>
-		<div class="health_bar_element" id="health_bar_element">
-        </div>
-        <div class="score_word_element">
-        	<h3>Score</h3>
-        </div>
-        <div class="score_display">
-        	<h1>0</h1>	
-        </div>
-        <div class="images" id="filler">
-		<img class="buildings" id="building-left" src="{% static "svg/skyline.svg" %}"/>
-		<img class="road" id="road-left" src="{% static "svg/road.svg" %}"/>
-		</div>
+	    	<div class="element1">
+				<img class="game_element" id="arrows" src="{% static "svg/arrow4.svg" %}"/>
+        	</div>	
+        
+        	<div class="element2">
+				<img class="game_element" id="health_panel" src="{% static "svg/health_panel1.svg" %}"/>
+			</div>
+	
+			<div class="health_bar_element" id="health_bar_element">
+        	</div>
+        
+        	<div class="score_word_element">
+        		<h3 id="score">Score</h3>
+        	</div>
+        
+        	<div class="score_display">
+        		<h1 id="score-number">0</h1>	
+       		</div>
+        
+        	<div class="images" id="filler">
+				<img class="buildings" id="building-left" src=	"{% static "svg/skyline.svg" %}"/>
+				<img class="road" id="road-left" src="{% static "svg/road.svg" %}"/>
+			</div>
+		
+			<div class="avatar" id="running-man">
+			</div>
+        
         </div>	
 		
 	</body>
+
 </html>
