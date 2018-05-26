@@ -13,11 +13,12 @@
 
 	     <style type="text/css">
         body {
-            position:fixed;
+            position:absolute;
             margin: 0;
             left:22%;
             top:5%;
         }
+
     </style>
 
 	</head>
@@ -49,6 +50,12 @@
      
 
        var cityline_title,small_road,brick,clouds,river,pavement,platform;
+
+       var brick_end;
+
+       var jump_button,jump_displacement;
+
+       var isJumping;
    
 
 		function preload(){
@@ -66,11 +73,15 @@
 
           this.load.image('small_road','http://localhost:8000/static/game/jpg_phaser/small_road.jpg');
 
+
+          this.load.image('brick_end','http://localhost:8000/static/game/jpg_phaser/brick_end.jpg');
+
          this.load.spritesheet('dude', 'http://localhost:8000/static/game/png/dude.png', { frameWidth: 32, frameHeight: 48 });
 
+          this.load.spritesheet('jump_button','http://localhost:8000/static/game/svg_phaser/jump_button.svg',{ frameWidth: 160, frameHeight: 160 });
 
-
-
+           isJumping=false;
+           jump_displacement=-1;
              
 
 		}
@@ -90,22 +101,30 @@
 
             //platforms.create(0,603, 'brick').setScale(2).refreshBody();
 
-            brick=this.add.tileSprite(400,603,800,200,'brick');
+          
 
+            brick_end=this.add.tileSprite(779.2,553,40,100,'brick_end');
+
+            brick=this.add.tileSprite(375,603,800,200,'brick');
             
              pavement=this.add.tileSprite(400,448,800,20,'pavement');
 
             small_road=this.add.tileSprite(400,450,800,20,'small_road');
 
-             
+
            
+            
+
             river=this.add.tileSprite(400,480,800,50,'river');
 
-            player = this.physics.add.sprite(100, 470, 'dude').setScale(1.5)
+            player = this.physics.add.sprite(200, 470, 'dude').setScale(1.5)
 
              player.setBounce(0.2);
              player.setCollideWorldBounds(true);
 
+              jump_button=this.add.sprite(50,550, 'jump_button').setInteractive().setScale(0.3);
+               
+               jump_button.on('pointerdown', jump_action);
 
              this.anims.create({
         key: 'right',
@@ -115,7 +134,18 @@
     });
 
 
-            
+    this.anims.create({
+        key: 'jump',
+        frames: this.anims.generateFrameNumbers('dude', { start: 6, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+
+     
+         console.log(player)
+         
+ 
              
              
      
@@ -123,28 +153,96 @@
 		}
 
 		function update(){
+            
+            //console.log(brick_end)
 
-
-              cityline_title.tilePositionX+=2;
-              brick.tilePositionX+=3;
+              
+                  cityline_title.tilePositionX+=2;
+                brick.tilePositionX+=3;
+               
               clouds.tilePositionX+=0.5;
               small_road.tilePositionX+=1;
               river.tilePositionY=1-river.tilePositionY
 
 
-              player.setVelocityX(0);
+              if(isJumping==false)
+              {
 
-        player.anims.play('right', true);
+                //console.log(isJumping);
 
+                player.setVelocityX(0);
+                player.setVelocityY(0);
+                player.anims.play('right', true);
+           
+                //player.anims.play('jump', false);
+
+
+              }
+        
+            
+         
+      
     
 
 		
 		}
 
 
-        game=new Phaser.Game(config);
+
+        function jump_action()
+        {
+
+           
+            
+          isJumping=true;
+       
+
+          player.anims.play('right',false);
+          player.anims.play('jump',true);
+
+          var jump_up,jump_down;
+
+          var jump_up=setInterval(up,0.5);
+
+          function up()
+          {
+            player.setVelocityY(-300);
+            if(player.y<=250)
+            {
+               clearInterval(jump_up);
+               jump_down=setInterval(down,0.5);
+            }
+
+            console.log(player.y)
+          
+          }
+
+          function down()
+          {
+                player.setVelocityY(300);
+                if(player.y>=470)
+                {
+                    player.setVelocityY(0);
+                    clearInterval(jump_down);
+                    isJumping=false;
+                    
+                    player.anims.play('right',true);
+                    player.anims.play('jump',false);
+                    
+                    
+                }
+          }
+
+         
+         
+
+        }
+
+
+        var game=new Phaser.Game(config);
 
 
 		</script>
+      
 	</body>
 </html>

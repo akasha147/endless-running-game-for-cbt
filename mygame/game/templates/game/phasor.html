@@ -202,6 +202,12 @@ function hitBomb (player, bomb)
     player.anims.play('turn');
 
     gameOver = true;
+
+
+    if (cursors.left.isDown)
+    {
+        player.setVelocityY(-330);
+    }
 }
 
 </script>
