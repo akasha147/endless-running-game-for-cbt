@@ -26,223 +26,182 @@
 	<body>
 		<script type="text/javascript">
 		
-		var config = {
-	    	type: Phaser.AUTO,
-	    	width: 800,
-	    	height: 600,
+    		//Configuration for phaser.js
+            var config = {
+    	    	type: Phaser.AUTO,
+    	    	width: 800,
+    	    	height: 600,
+                
+                physics: {
+    	        	default: 'arcade',
+    	        	arcade: {
+    	            		
+    	            		debug: false
+    	        		}
+    	    		},
+    	   	 	
+                scene: {
+    	        	preload: preload,
+    	       	    create: create,
+    	       	 	update: update
+    	   		 }
+    		};
+
+           //Variables for the game elments
+           var cityline_title;
+           var small_road;
+           var brick;
+           var clouds;
+           var river;
+           var pavement;
+           var platform;
+           var brick_end;
+
+           //Variables for Buttons
+           var jump_button;
+           var leap_button;
+
+           //Flags
+           var isJumping;
+           var isLeaping;
+
+            //Load the elements and setup the flags
+            function preload(){
+                this.load.image('skyline','http://localhost:8000/static/game/jpg_phaser/blue_city.jpg');
+
+                this.load.image('brick','http://localhost:8000/static/game/jpg_phaser/platform.jpg');
+                
+                this.load.image('road','http://localhost:8000/static/game/jpg_phaser/road.jpg');
+
+                this.load.image('clouds','http://localhost:8000/static/game/jpg_phaser/clouds.jpg');
+
+                this.load.image('river','http://localhost:8000/static/game/jpg_phaser/river.jpg');
+
+                this.load.image('pavement','http://localhost:8000/static/game/jpg_phaser/pavement.jpg');
+
+                this.load.image('small_road','http://localhost:8000/static/game/jpg_phaser/small_road.jpg');
+                
+                this.load.image('brick_end','http://localhost:8000/static/game/jpg_phaser/brick_end.jpg');
+
+                this.load.spritesheet('dude', 'http://localhost:8000/static/game/png/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+                this.load.spritesheet('jump_button','http://localhost:8000/static/game/svg_phaser/jump_button.svg',{ frameWidth: 160, frameHeight: 160 });
             
-        
-	    	
-            physics: {
-	        	default: 'arcade',
-	        	arcade: {
-	            		
-	            		debug: false
-	        		}
-	    		},
-	   	 	scene: {
-	        	preload: preload,
-	       	    create: create,
-	       	 	update: update
-	   		 }
-		};
-
-     
-
-       var cityline_title,small_road,brick,clouds,river,pavement,platform;
-
-       var brick_end;
-
-       var jump_button,jump_displacement;
-
-       var isJumping;
-   
-
-		function preload(){
-
-			
-		this.load.image('skyline','http://localhost:8000/static/game/jpg_phaser/blue_city.jpg');
-        this.load.image('brick','http://localhost:8000/static/game/jpg_phaser/platform.jpg');
-        this.load.image('road','http://localhost:8000/static/game/jpg_phaser/road.jpg');
-
-         this.load.image('clouds','http://localhost:8000/static/game/jpg_phaser/clouds.jpg');
-
-          this.load.image('river','http://localhost:8000/static/game/jpg_phaser/river.jpg');
-
-          this.load.image('pavement','http://localhost:8000/static/game/jpg_phaser/pavement.jpg');
-
-          this.load.image('small_road','http://localhost:8000/static/game/jpg_phaser/small_road.jpg');
+                isJumping=isLeaping=false;
 
 
-          this.load.image('brick_end','http://localhost:8000/static/game/jpg_phaser/brick_end.jpg');
-
-         this.load.spritesheet('dude', 'http://localhost:8000/static/game/png/dude.png', { frameWidth: 32, frameHeight: 48 });
-
-          this.load.spritesheet('jump_button','http://localhost:8000/static/game/svg_phaser/jump_button.svg',{ frameWidth: 160, frameHeight: 160 });
-
-           isJumping=false;
-           jump_displacement=-1;
-             
-
-		}
-
-
-
-		function create(){
-          
-        
-
-            platforms = this.physics.add.staticGroup();
-
-            
-            clouds=this.add.tileSprite(400,200,800,400,'clouds');
-
-            cityline_title=this.add.tileSprite(400,360,800,200,'skyline');
-
-            //platforms.create(0,603, 'brick').setScale(2).refreshBody();
-
-          
-
-            brick_end=this.add.tileSprite(779.2,553,40,100,'brick_end');
-
-            brick=this.add.tileSprite(375,603,800,200,'brick');
-            
-             pavement=this.add.tileSprite(400,448,800,20,'pavement');
-
-            small_road=this.add.tileSprite(400,450,800,20,'small_road');
-
-
-           
-            
-
-            river=this.add.tileSprite(400,480,800,50,'river');
-
-            player = this.physics.add.sprite(200, 470, 'dude').setScale(1.5)
-
-             player.setBounce(0.2);
-             player.setCollideWorldBounds(true);
-
-              jump_button=this.add.sprite(50,550, 'jump_button').setInteractive().setScale(0.3);
-               
-               jump_button.on('pointerdown', jump_action);
-
-             this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-
-    this.anims.create({
-        key: 'jump',
-        frames: this.anims.generateFrameNumbers('dude', { start: 6, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-
-     
-         console.log(player)
-         
- 
-             
-             
-     
-
-		}
-
-		function update(){
-            
-            //console.log(brick_end)
-
-              
-                  cityline_title.tilePositionX+=2;
-                brick.tilePositionX+=3;
-               
-              clouds.tilePositionX+=0.5;
-              small_road.tilePositionX+=1;
-              river.tilePositionY=1-river.tilePositionY
-
-
-              if(isJumping==false)
-              {
-
-                //console.log(isJumping);
-
-                player.setVelocityX(0);
-                player.setVelocityY(0);
-                player.anims.play('right', true);
-           
-                //player.anims.play('jump', false);
-
-
-              }
-        
-            
-         
-      
-    
-
-		
-		}
-
-
-
-        function jump_action()
-        {
-
-           
-            
-          isJumping=true;
-       
-
-          player.anims.play('right',false);
-          player.anims.play('jump',true);
-
-          var jump_up,jump_down;
-
-          var jump_up=setInterval(up,0.5);
-
-          function up()
-          {
-            player.setVelocityY(-300);
-            if(player.y<=250)
-            {
-               clearInterval(jump_up);
-               jump_down=setInterval(down,0.5);
             }
 
-            console.log(player.y)
-          
-          }
+            function create(){
+                //add the elements
+                
+                platforms = this.physics.add.staticGroup();
+                clouds=this.add.tileSprite(400,200,800,400,'clouds');
+                cityline_title=this.add.tileSprite(400,360,800,200,'skyline');
+                brick_end=this.add.tileSprite(779.2,553,40,100,'brick_end');
+                brick=this.add.tileSprite(375,603,850,200,'brick');
+                pavement=this.add.tileSprite(400,448,800,20,'pavement');
+                small_road=this.add.tileSprite(400,450,800,20,'small_road');
+                river=this.add.tileSprite(400,480,800,50,'river');
 
-          function down()
-          {
-                player.setVelocityY(300);
-                if(player.y>=470)
-                {
+                //Add player and settings
+        
+                player = this.physics.add.sprite(200, 470, 'dude').setScale(1.5)
+                player.setBounce(0.2);
+                player.setCollideWorldBounds(true);
+                 
+
+                //Add running and jumping animation
+                
+                this.anims.create({
+                    key: 'run',
+                    frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+                    frameRate: 10,
+                    repeat: -1
+                });
+
+                this.anims.create({
+                    key: 'jump',
+                    frames: this.anims.generateFrameNumbers('dude', { start: 6, end: 6 }),
+                    frameRate: 10,
+                    repeat: -1
+                });
+
+
+                //Add control buttons
+                jump_button=this.add.sprite(50,550, 'jump_button').setInteractive().setScale(0.3);
+                leap_button=this.add.sprite(760,550, 'jump_button').setInteractive().setScale(0.3);
+                leap_button.angle+=90;
+               
+               //Add event listener functions;
+               jump_button.on('pointerdown', jump_action);
+               leap_button.on('pointerdown', leap_action);
+            }
+
+		    function update(){
+                
+                //set the elements in motion
+
+                cityline_title.tilePositionX+=2;
+                brick.tilePositionX+=3;
+                clouds.tilePositionX+=0.5;
+                small_road.tilePositionX+=1;
+                river.tilePositionX+=1;
+                river.titlePositionY=1-river.titlePositionY;
+
+                //set the animation to be running if no other action is taking place
+                if(isJumping==false){
+                    
+                    player.setVelocityX(0);
                     player.setVelocityY(0);
-                    clearInterval(jump_down);
-                    isJumping=false;
-                    
-                    player.anims.play('right',true);
-                    player.anims.play('jump',false);
-                    
-                    
+                    player.anims.play('run', true);
                 }
-          }
+            }
+            
+            //function for jump animation  
+            function jump_action(){
+                
+                //Intialise setup
+                isJumping=true;
+                player.anims.play('right',false);
+                player.anims.play('jump',true);
 
-         
-         
+                var jump_up,jump_down;
 
-        }
+                //Call the jump_up function periodically
+                var jump_up=setInterval(up,0.5);
 
+                function up(){
 
-        var game=new Phaser.Game(config);
+                    player.setVelocityY(-300);
+                    
+                    //Clear jump_up and call jump_down function on reaching maximum height
+                    if(player.y<=300){
+               
+                        clearInterval(jump_up);
+                        jump_down=setInterval(down,0.5);
+                    }
+                }
 
+                function down(){
+                    player.setVelocityY(300);
+                
+                    //Clear jump_down and restore default settings on reaching back
+                    if(player.y>=470){
+                    
+                        player.setVelocityY(0);
+                        clearInterval(jump_down);
+                        isJumping=false;
+                    }
+                }
+            }
+        
+            function leap_action(){
 
-		</script>
+            }
+            var game=new Phaser.Game(config);
+        
+        </script>
       
 	</body>
 </html>
