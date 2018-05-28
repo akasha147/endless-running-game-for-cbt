@@ -53,9 +53,13 @@
            var brick;
            var clouds;
            var river;
+           var big_river;
+           var river_filler;
            var pavement;
            var platform;
            var brick_end;
+           var blue_filler;
+           var cursors;
 
            //Variables for Buttons
            var jump_button;
@@ -64,6 +68,9 @@
            //Flags
            var isJumping;
            var isLeaping;
+           var isStanding;
+           var isStopMovement;
+           var reachedCrossing
 
             //Load the elements and setup the flags
             function preload(){
@@ -83,11 +90,17 @@
                 
                 this.load.image('brick_end','http://localhost:8000/static/game/jpg_phaser/brick_end.jpg');
 
+                this.load.image('blue_filler','http://localhost:8000/static/game/jpg_phaser/blue_filler.jpg');
+
                 this.load.spritesheet('dude', 'http://localhost:8000/static/game/png/dude.png', { frameWidth: 32, frameHeight: 48 });
 
                 this.load.spritesheet('jump_button','http://localhost:8000/static/game/svg_phaser/jump_button.svg',{ frameWidth: 160, frameHeight: 160 });
+
+                this.load.spritesheet('river_filler','http://localhost:8000/static/game/jpg_phaser/filler_river.jpg',{ frameWidth: 160, frameHeight: 160 });
+
+
             
-                isJumping=isLeaping=false;
+                reachedCrossing=isJumping=isStanding=isLeaping=isStopMovement=false;
 
 
             }
@@ -97,21 +110,33 @@
                 
                 platforms = this.physics.add.staticGroup();
                 clouds=this.add.tileSprite(400,200,800,400,'clouds');
+                blue_filler=this.add.tileSprite(400,400,800,400,"blue_filler");
                 cityline_title=this.add.tileSprite(400,360,800,200,'skyline');
+                river_filler=this.add.tileSprite(595,600,445,205,'river_filler');
+
+
                 brick_end=this.add.tileSprite(779.2,553,40,100,'brick_end');
                 brick=this.add.tileSprite(375,603,850,200,'brick');
                 pavement=this.add.tileSprite(400,448,800,20,'pavement');
                 small_road=this.add.tileSprite(400,450,800,20,'small_road');
-                river=this.add.tileSprite(400,480,800,50,'river');
+                big_river=this.add.tileSprite(578,480,450,50,'river');
 
+                river=this.add.tileSprite(400,480,800,50,'river');
+              
                 //Add player and settings
         
-                player = this.physics.add.sprite(200, 470, 'dude').setScale(1.5)
+                player = this.physics.add.sprite(360, 470, 'dude').setScale(1.5)
                 player.setBounce(0.2);
                 player.setCollideWorldBounds(true);
+
+                cursors = this.input.keyboard.createCursorKeys();
+
+                
+
+                console.log(cityline_title);
                  
 
-                //Add running and jumping animation
+                //Add running,standing and jumping animation
                 
                 this.anims.create({
                     key: 'run',
@@ -126,6 +151,16 @@
                     frameRate: 10,
                     repeat: -1
                 });
+
+                this.anims.create({
+                    key: 'stand',
+                    frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 5 }),
+                    frameRate: 10,
+                    repeat: -1
+                });
+
+
+
 
 
                 //Add control buttons
@@ -142,20 +177,45 @@
                 
                 //set the elements in motion
 
-                cityline_title.tilePositionX+=2;
-                brick.tilePositionX+=3;
-                clouds.tilePositionX+=0.5;
-                small_road.tilePositionX+=1;
-                river.tilePositionX+=1;
+                if(isStopMovement==false)
+                {
+                
+                brick.tilePositionX+=4;
+                
+                small_road.tilePositionX+=2;
+                river.tilePositionX+=2;
                 river.titlePositionY=1-river.titlePositionY;
+                big_river.tilePositionX+=2;
+                big_river.titlePositionY=1-big_river.titlePositionY;
+                }
+                else
+                {
+                  clouds.tilePositionX+=0.1;
+                  river.tilePositionX+=0.5;
+                river.titlePositionY=1-river.titlePositionY;
+                big_river.tilePositionX+=0.5;
+                big_river.titlePositionY=1-big_river.titlePositionY;
 
+                }
+
+                if(reachedCrossing==false)
+                {
+                clouds.tilePositionX+=0.5;
+                cityline_title.tilePositionX+=2.5;
+            }
                 //set the animation to be running if no other action is taking place
-                if(isJumping==false){
+                if(isJumping==false&&isStanding==false){
                     
                     player.setVelocityX(0);
                     player.setVelocityY(0);
                     player.anims.play('run', true);
                 }
+                
+
+                if (cursors.left.isDown)
+                 {
+                       leap_action();
+                    }
             }
             
             //function for jump animation  
@@ -163,7 +223,7 @@
                 
                 //Intialise setup
                 isJumping=true;
-                player.anims.play('right',false);
+                player.anims.play('run',false);
                 player.anims.play('jump',true);
 
                 var jump_up,jump_down;
@@ -197,6 +257,39 @@
             }
         
             function leap_action(){
+
+                var startSlowdown=setInterval(slowdown,0.5)
+                 isStopMovement=true;
+                   
+
+                function slowdown(){
+
+                   if(brick.x<=-53.39999999999612){
+                     clearInterval(startSlowdown)
+                      isStanding=true
+                      reachedCrossing=true;
+                     player.anims.play('run',false);
+                     player.anims.play('stand',true);
+                      console.log(brick.x);
+                    }
+                    
+                  
+                    
+                    //cityline_title.x-=0.5;
+                    brick.x-=1.2;
+                    //small_road.x-=0.5;
+                    //river.x-=1.2;
+                    if(brick.x<=350)
+                    {
+                        brick_end.x-=1.2;
+                    }
+                }
+
+
+                
+
+
+
 
             }
             var game=new Phaser.Game(config);
