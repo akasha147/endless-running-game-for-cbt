@@ -60,6 +60,7 @@
            var brick_end;
            var blue_filler;
            var cursors;
+           var coin;
 
            //Variables for Buttons
            var jump_button;
@@ -70,7 +71,9 @@
            var isLeaping;
            var isStanding;
            var isStopMovement;
-           var reachedCrossing
+           var reachedCrossing;
+           var stop_coin_generation;
+           var score=0;
 
             //Load the elements and setup the flags
             function preload(){
@@ -92,6 +95,8 @@
 
                 this.load.image('blue_filler','http://localhost:8000/static/game/jpg_phaser/blue_filler.jpg');
 
+                this.load.image('coin','http://localhost:8000/static/game/svg_phaser/coin.svg');
+
                 this.load.spritesheet('dude', 'http://localhost:8000/static/game/png/dude.png', { frameWidth: 32, frameHeight: 48 });
 
                 this.load.spritesheet('jump_button','http://localhost:8000/static/game/svg_phaser/jump_button.svg',{ frameWidth: 160, frameHeight: 160 });
@@ -100,7 +105,7 @@
 
 
             
-                reachedCrossing=isJumping=isStanding=isLeaping=isStopMovement=false;
+                stop_coin_generation= reachedCrossing=isJumping=isStanding=isLeaping=isStopMovement=false;
 
 
             }
@@ -122,6 +127,8 @@
                 big_river=this.add.tileSprite(578,480,450,50,'river');
 
                 river=this.add.tileSprite(400,480,800,50,'river');
+
+              
               
                 //Add player and settings
         
@@ -171,61 +178,145 @@
                //Add event listener functions;
                jump_button.on('pointerdown', jump_action);
                leap_button.on('pointerdown', leap_action);
+               //leap_action();
             }
 
 		    function update(){
                 
                 //set the elements in motion
 
-                if(isStopMovement==false)
-                {
-                
-                brick.tilePositionX+=4;
-                
-                small_road.tilePositionX+=2;
-                river.tilePositionX+=2;
-                river.titlePositionY=1-river.titlePositionY;
-                big_river.tilePositionX+=2;
-                big_river.titlePositionY=1-big_river.titlePositionY;
-                }
-                else
-                {
-                  clouds.tilePositionX+=0.1;
-                  river.tilePositionX+=0.5;
-                river.titlePositionY=1-river.titlePositionY;
-                big_river.tilePositionX+=0.5;
-                big_river.titlePositionY=1-big_river.titlePositionY;
-
-                }
-
-                if(reachedCrossing==false)
-                {
-                clouds.tilePositionX+=0.5;
-                cityline_title.tilePositionX+=2.5;
-            }
                 //set the animation to be running if no other action is taking place
-                if(isJumping==false&&isStanding==false){
+
+                var curr_game=this;
+                console.log(stop_coin_generation);
+                var coin_generator=null;
+                //console.log(this);
+                if(coin_generator==null&&reachedCrossing==false&&isStanding==false)
+                {  
+                  
+                  coin_generator=setInterval(coins_placer,2000);
+                  stop_coin_generation=false;
+                }
+                if(reachedCrossing==true||isStanding==true)
+                {   
+                     
+                    stop_coin_generation=true;
+                }    
+                if(isJumping==false&&reachedCrossing==false&&cursors.right.isDown){
                     
                     player.setVelocityX(0);
                     player.setVelocityY(0);
                     player.anims.play('run', true);
+
+                    brick.tilePositionX+=4;
+                    small_road.tilePositionX+=2;
+                    river.tilePositionX+=2;
+                    river.titlePositionY=1-river.titlePositionY;
+                    big_river.tilePositionX+=2;
+                    big_river.titlePositionY=1-big_river.titlePositionY;
+
+                    clouds.tilePositionX+=0.5;
+                    cityline_title.tilePositionX+=2.5;
+                    isStanding=false;
+
+                }
+                else if(cursors.up.isDown&&isJumping==false)
+                {
+                    jump_action();
+                    isJumping=true;
+                   
+                }
+                else if(isJumping==true)
+                {
+                    player.anims.play('run',false);
+                    player.anims.play('stand',false);
+                    player.anims.play('jump',true);
+
+                    
+                  
+
+                    clouds.tilePositionX+=0.1;
+                    river.tilePositionX+=0.5;
+                    river.titlePositionY=1-river.titlePositionY;
+                    big_river.tilePositionX+=0.5;
+                    big_river.titlePositionY=1-big_river.titlePositionY;
                 }
                 
+                else
+                {
+                    player.anims.play('run',false);
+                    player.anims.play('stand',true);
 
-                if (cursors.left.isDown)
-                 {
-                       leap_action();
+                    clouds.tilePositionX+=0.1;
+                    river.tilePositionX+=0.5;
+                    river.titlePositionY=1-river.titlePositionY;
+                    big_river.tilePositionX+=0.5;
+                    big_river.titlePositionY=1-big_river.titlePositionY;
+                    isStanding=true;
+
+
+
+                }
+
+                  function coins_placer()
+                {
+                    //console.log("hi");
+                    if(coin==null)
+                    {   
+
+                    var y_cordinate=400-Math.floor(Math.random() * 100);
+                    coin=curr_game.add.image(900,y_cordinate,'coin').setScale(0.75);
+                    var collider=curr_game.physics.add.overlap(player,coin, collect_coin, null, this);
+                    console.log(collider);
                     }
+                   
+                    if(coin!=null&&coin.x>=-300)
+                    {    
+                    coin.x-=0.5;
+
+                    }
+                    else
+                    {
+
+                        
+                        if(stop_coin_generation==true)
+                        {
+                            
+                            clearInterval(coin_generator);
+                        }
+                        else
+                        {
+                        coin=null;
+                        }
+                    }    
+                    
+                }
+                function collect_coin()
+                {
+                    score+=5;
+                    coin.disableBody(true, true);
+                    console.log(score);
+                }
+
+
+
+                
+
+                
             }
             
             //function for jump animation  
             function jump_action(){
                 
                 //Intialise setup
-                isJumping=true;
-                player.anims.play('run',false);
-                player.anims.play('jump',true);
+               if(isJumping)
+               {
+                return;
+               }
 
+               isJumping=true;
+
+              
                 var jump_up,jump_down;
 
                 //Call the jump_up function periodically
@@ -285,7 +376,7 @@
                     }
                 }
 
-
+              
                 
 
 
